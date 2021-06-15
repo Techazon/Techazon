@@ -3,21 +3,46 @@ const db = require('../db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const axios = require('axios');
+const { validate } = require('../db');
 
 const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
-  username: {
+  firstName: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
     unique: true,
-    allowNull: false
+    validate: {
+      notEmpty: true,
+      isEmail: true,
+    },
+  },
+  role:{
+      type: Sequelize.ENUM('Admin', 'User'),
+      defaultValue: 'User',
+      allowNull: false,
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+        len: [8,1000]
+    },
   },
-  githubId: {
-    type: Sequelize.INTEGER
-  }
 })
 
 module.exports = User

@@ -1,0 +1,72 @@
+
+{
+    "carts": [
+        {
+            "cart_id": 1,
+            "status": "COMPLETE",
+            "mailingAddress":{
+                
+            },
+            "payment":{
+
+            },
+            "cartProducts": [
+                {
+                    "productId": 1,
+                    "product":{
+                        
+                    }
+                }
+            ]
+        },
+        {
+            "cart_id": 2,
+            "status": "IN_PROGRESS"
+        }
+
+    ]
+}
+
+
+
+
+{
+    "payments": [
+        {
+            "paymentId": 1,
+            "billingAddressId": 1,
+            // "billingAddress": {
+            //     fasdf
+            //     asdf
+            //     asdf
+            //     asdf
+            // } ,
+            "billingaddress1": "test",
+            "billing": "fsafae",
+            "cardNum": "sadkjfa",
+            "cvv": "fsdf"
+        }
+
+    ]
+}
+
+
+
+
+
+{
+    "cartProducts":[
+        {
+            "cartId": 1,
+            "productId": 1,
+            "product": {
+
+            },
+            "quantity": 2
+        }
+    ]
+}
+
+{
+
+}
