@@ -1,21 +1,86 @@
 body {
-  font-family: sans-serif;
+  font-family: Montserrat, sans-serif;
+  margin: 0;
 }
 
 a {
   text-decoration: none;
 }
 
-label {
-  display: block;
+h1 {
+  color: black;
+  margin: 0;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
+label {
+  display: block;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+/* NAV BAR */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #18A0FB;
+  text-decoration: none;
+  height: 2rem;
+  font-size: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin: 0
+}
+
+nav a{
+  font-size: 0.75rem;
+  color: #18A0FB;
+  margin-left: 1rem;
+}
+
+
+#navLinks{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#navLinks a{
+  margin-top: 0.25rem;
+}
+
+#navButtons {
+  align-items:center;
+}
+
+#registerButton{
+  background: #18A0FB;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 6px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem; 
+
+}
+
+#loginButton, #logoutButton{
+  font-weight: bold;
+  background: white;
+  font-size: 15px;
+  color: #18A0FB;
+  border-width: 1px;
+  border-color:#18A0FB;
+  border-style: solid;
+  border-radius: 6px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem; 
 }

@@ -47,10 +47,10 @@ const mapLogin = state => {
   }
 }
 
-const mapSignup = state => {
+const mapRegister = state => {
   return {
-    name: 'signup',
-    displayName: 'Sign Up',
+    name: 'register',
+    displayName: 'Register',
     error: state.auth.error
   }
 }
@@ -68,4 +68,4 @@ const mapDispatch = dispatch => {
 }
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Signup = connect(mapRegister, mapDispatch)(AuthForm)
