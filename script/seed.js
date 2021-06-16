@@ -1,5 +1,6 @@
 "use strict";
-
+const createUsers = require("../script/users");
+const createAddresses = require("../script/createAddress");
 const {
   db,
   models: { Product, Category },
@@ -12,6 +13,10 @@ const {
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
+
+  await createUsers();
+
+  await createAddresses();
 
   const computers = await Category.create({
     categoryName: "computers",
@@ -29,7 +34,7 @@ async function seed() {
     categoryName: "keyboards",
   });
 
-//Products
+  //Products
 
   const appleG3 = await Product.create({
     productName: "Apple iMacG3",
