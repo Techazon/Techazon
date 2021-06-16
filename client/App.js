@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router'
 
-import Navbar from './pages/Navbar'
+import Navbar from './components/Navbar'
 import Routes from './Routes'
 import AllProducts from './pages/AllProducts'
 
