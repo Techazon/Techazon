@@ -52,7 +52,7 @@ const SignUp = (props) => {
  *   can stay DRY with interfaces that are very similar to each other!
  */
 
-const mapSignup = (state) => {
+const mapRegister = (state) => {
   return {
     name: "register",
     displayName: "Register",
@@ -76,4 +76,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export const Register = connect(mapSignup, mapDispatch)(SignUp);
+export const Register = connect(mapRegister, mapDispatch)(SignUp);
