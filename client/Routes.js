@@ -17,26 +17,17 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
     return (
       <div>
-
-        <Route exact path="/" component={Home} />
-        <Route path='/home' component={Home} />
-        <Route exact path="/products" component={AllProducts} />
-        <Route path="/products/:id" component={SingleProduct} />
-
-        {isLoggedIn ? (
-          <Switch>
-            <Redirect to="/home" />
-          </Switch>
-        ) : (
-          <Switch>
-            {/* <Route path="/" exact component={Login} /> */}
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-          </Switch>
-        )}
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/home" component={Home} />
+          <Route exact path="/products" component={AllProducts} />
+          <Route path="/products/:id" component={SingleProduct} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Redirect to="/"/>
+        </Switch>
       </div>
     );
   }

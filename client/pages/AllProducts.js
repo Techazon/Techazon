@@ -2,65 +2,39 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/allProducts";
 import { connect } from "react-redux";
+import { cartFuncs } from '../helperFuncs'
 
 class AllProducts extends React.Component {
   constructor(props) {
     super(props);
-
-    this.clickQuantity = this.clickQuantity.bind(this)
-    this.clickAddToCart = this.clickAddToCart.bind(this)
   }
+
   componentDidMount() {
     this.props.fetchProducts();
   }
 
-  clickQuantity(e, prod){
-    prod.quantity = Number(e.target.value)
-  }
-
-  clickAddToCart(prod){
-    // function handles adding product to a cart or updating quantity if product is already in a cart
-    
-    if (!prod.quantity){
-      prod.quantity = 1
-    }
-    
-    const { id, imageUrl, price, productName, quantity} = prod
-    let cartInfo = JSON.parse(localStorage.getItem('cart'))
-
-    if (!cartInfo[id]){
-      cartInfo[id] = {imageUrl, price, productName, quantity}
-    } else {
-      cartInfo[id].quantity += Number(quantity)
-    }
-
-    localStorage.setItem('cart', JSON.stringify(cartInfo))
-
-  }
-
   render() {
-
     const products = this.props.products;
     return (
       <div>
         <h2>Check out our retro gear!</h2>
         {products &&
-          products.map((prod) => (
-            <div key={prod.id}>
-              <img src={prod.imageUrl} width="150px" height="150px" />
-              <div>Product Name: {prod.productName}</div>
-              <div>Price: {prod.price}</div>
-              {prod.stock ? (
-                <div>Stock: {prod.stock}</div>
+          products.map((product) => (
+            <div key={product.id}>
+              <img src={product.imageUrl} width="150px" height="150px" />
+              <div>Product Name: {product.productName}</div>
+              <div>Price: {product.price}</div>
+              {product.stock ? (
+                <div>Stock: {product.stock}</div>
               ) : (
                 <div> SOLD OUT </div>
               )}
               {/* <div>{prod.description}</div> */}
-              <div>Category Name: {prod.category.categoryName}</div>
-              <button onClick={() => this.clickAddToCart(prod)}>Add to Cart</button>
+              <div>Category Name: {product.category.categoryName}</div>
+              <button onClick={() => cartFuncs.clickAddToCart(product)}>Add to Cart</button>
               <button>Preview</button>
               <button>View Details</button>
-              Quantity:<select onChange={(e) => this.clickQuantity(e, prod)}> 
+              Quantity:<select onChange={(event) => cartFuncs.clickQuantity(event, product)}> 
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
