@@ -29,11 +29,9 @@ Cart.belongsTo(Payment);
 Payment.hasOne(Address);
 Address.belongsTo(Payment);
 
-Cart.hasMany(CartProduct)
-CartProduct.belongsTo(Cart)
+Cart.belongsToMany(Product, {through: 'cart_product'})
+Product.belongsToMany(Cart, {through: 'cart_product'})
 
-Product.hasMany(CartProduct)
-CartProduct.belongsTo(Product)
 
 module.exports = {
   db,
