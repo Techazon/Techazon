@@ -3,7 +3,13 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn }) => {
+
+  if (!localStorage.getItem('cart')){
+    localStorage.setItem('cart', JSON.stringify({}))
+}
+
+  return(
   <div id='navContainer'>
     <nav>
       <div id='navLinks'>
@@ -32,8 +38,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       )}
     </nav>
     {/* <hr /> */}
-  </div>
-);
+  </div>)
+};
 
 /**
  * CONTAINER
