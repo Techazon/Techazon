@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/product";
+import { fetchProducts } from "../store/allProducts";
 import { connect } from "react-redux";
 
 class AllProducts extends React.Component {
@@ -72,8 +72,8 @@ class AllProducts extends React.Component {
   }
 }
 
-const mapState = ({ productReducer }) => {
-  return productReducer;
+const mapState = ({ allProductsReducer }) => {
+  return allProductsReducer;
 };
 
 const mapDispatch = (dispatch) => ({
