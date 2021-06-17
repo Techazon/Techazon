@@ -24,7 +24,6 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
-    // console.log(res.data);
     return dispatch(setAuth(res.data));
   }
 };
@@ -36,7 +35,6 @@ export const authenticateLogin =
         email,
         password,
       });
-      // console.log(firstName);
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
     } catch (authError) {
@@ -53,7 +51,6 @@ export const authenticateRegister =
         email,
         password,
       });
-      // console.log(firstName);
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
     } catch (authError) {
