@@ -7,15 +7,15 @@ const Cart = db.define('cart', {
         allowNull: false
       },
       total: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       tax: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       shipping: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.INTEGER,
         allowNull: false
       }
 })
