@@ -1,9 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/allProducts";
-import { connect } from "react-redux";
-import { cartFuncs } from "../helperFuncs";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link } from 'react-router-dom'
 
 class GuestCart extends React.Component {
   constructor(props) {
@@ -63,7 +59,9 @@ class GuestCart extends React.Component {
           <h3>Subtotal: ${subTotal / 100}</h3>
           {/* Have to put <Link to='/checkout'></Link around button */}
           {subTotal !== 0 && (
+            <Link to="/checkout">
             <button id="checkoutButton">Proceed to Checkout</button>
+            </Link>
           )}
         </div>
       </div>

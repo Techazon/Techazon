@@ -5,10 +5,6 @@ import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => {
 
-  if (!localStorage.getItem('cart')){
-    localStorage.setItem('cart', JSON.stringify({}))
-}
-
   return(
   <div id='navContainer'>
     <nav>

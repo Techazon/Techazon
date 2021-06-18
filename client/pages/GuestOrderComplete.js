@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 export const GuestOrderComplete = (props) => {
   const { username } = props;
-  localStorage.clear();
+  localStorage.setItem('cart', JSON.stringify({}))
   return (
     <div>
       <h3>Thank you for your order {username ? `${username}!!` : "Guest!!"}</h3>
