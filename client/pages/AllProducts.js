@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/allProducts";
-import { connect } from "react-redux";
-import { cartFuncs } from '../helperFuncs'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../store/allProducts';
+import { connect } from 'react-redux';
+import { cartFuncs } from '../helperFuncs';
+import { Link } from 'react-router-dom';
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -31,14 +32,28 @@ class AllProducts extends React.Component {
               )}
               {/* <div>{prod.description}</div> */}
               <div>Category Name: {product.category.categoryName}</div>
-              <button onClick={() => cartFuncs.clickAddToCart(product)}>Add to Cart</button>
+              <button onClick={() => cartFuncs.clickAddToCart(product)}>
+                Add to Cart
+              </button>
               <button>Preview</button>
-              <button>View Details</button>
-              Quantity:<select onChange={(event) => cartFuncs.clickQuantity(event, product)}> 
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  </select> 
+              <Link to={`/products/${product.id}`}>
+                <button>View Details</button>
+              </Link>
+              Quantity:
+              <select
+                onChange={(event) => cartFuncs.clickQuantity(event, product)}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
             </div>
           ))}
       </div>
@@ -84,7 +99,7 @@ export default connect(mapState, mapDispatch)(AllProducts);
 //               <button>Add to Cart</button>
 //               <button>Preview</button>
 //               <button>View Details</button>
-//                 Quantity: <input /> 
+//                 Quantity: <input />
 //                 {/* //revist */}
 //             </div>
 //           ))}
