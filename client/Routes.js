@@ -7,6 +7,7 @@ import { Login } from "./components/Login";
 import { Register } from "./components/Register";
 import Home from "./pages/Home";
 import { me } from "./store";
+import Cart from './pages/Cart'
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ class Routes extends Component {
           <Route path="/products/:id" component={SingleProduct} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path='/cart' component={Cart} />
           <Redirect to="/"/>
         </Switch>
       </div>

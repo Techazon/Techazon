@@ -24,7 +24,7 @@ class AllProducts extends React.Component {
             <div key={product.id}>
               <img src={product.imageUrl} width="150px" height="150px" />
               <div>Product Name: {product.productName}</div>
-              <div>Price: {product.price}</div>
+              <div>Price: ${product.price / 100}</div>
               {product.stock ? (
                 <div>Stock: {product.stock}</div>
               ) : (
@@ -39,7 +39,7 @@ class AllProducts extends React.Component {
               <Link to={`/products/${product.id}`}>
                 <button>View Details</button>
               </Link>
-              Quantity:
+              Add Quantity:
               <select
                 onChange={(event) => cartFuncs.clickQuantity(event, product)}
               >
