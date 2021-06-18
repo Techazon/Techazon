@@ -18,12 +18,12 @@ export class SingleProduct extends React.Component {
           <div>
             <h2>Product Name: {product.productName}</h2>
             <img src={product.imageUrl} />
-            <p>Price: ${product.price}</p>
+            <p>Price: ${product.price / 100}</p>
             <p>Description: {product.description}</p>
             <button onClick={() => cartFuncs.clickAddToCart(product)}>
               Add to Cart
             </button>
-            Quantity:
+            Add Quantity:
             <select
               onChange={(event) => cartFuncs.clickQuantity(event, product)}
             >
