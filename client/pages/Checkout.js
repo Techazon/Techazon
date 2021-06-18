@@ -14,7 +14,7 @@ export default class Checkout extends React.Component {
     const tax = 879;
     const cartArray = this.state.cart;
     const total = cartArray.reduce((acc, cartItem) => {
-      return (acc += cartItem.price * 100 * cartItem.quantity);
+      return (acc += cartItem.price * cartItem.quantity);
     }, 0);
     const mappedCart = cartArray.map((cartItem) => (
       <div key={cartItem.id}>
@@ -22,12 +22,12 @@ export default class Checkout extends React.Component {
         <div>Product Name: {cartItem.productName}</div>
         <div>Category: {cartItem.categoryName}</div>
         <div>
-          Total Price: {(cartItem.price * 100 * cartItem.quantity) / 100}
+          Total Price: {(cartItem.price * cartItem.quantity) / 100}
         </div>
         <div>Quantity: {cartItem.quantity}</div>
       </div>
     ));
-    console.log(cartArray);
+
     return (
       <div>
         <div id="cartInCheckout">
@@ -38,7 +38,7 @@ export default class Checkout extends React.Component {
               <br />
               <div>
                 <h2>Order Summary</h2>
-                <h4>Sub-Total: {total / 100}</h4>
+                <h4>Sub-Total: ${total / 100}</h4>
                 <h4>Shipping: ${shipping / 100}</h4>
                 <h4>Tax: ${tax / 100}</h4>
                 <h3>Total: ${(total + (shipping + tax)) / 100}</h3>

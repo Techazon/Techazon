@@ -20,6 +20,9 @@ class Routes extends Component {
   }
 
   render() {
+    if (!localStorage.getItem('cart')){
+      localStorage.setItem('cart', JSON.stringify({}))
+  }
     return (
       <div>
         <Switch>
