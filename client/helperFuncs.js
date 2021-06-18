@@ -4,11 +4,15 @@ export const cartFuncs = {
     if (!prod.quantity) {
       prod.quantity = 1;
     }
+
     const { id, imageUrl, price, productName, quantity, description, category } = prod;
+
     let cartInfo = JSON.parse(localStorage.getItem("cart"));
     let categoryName = category.categoryName;
     if (!cartInfo[id]) {
+
       cartInfo[id] = { id, imageUrl, price, productName, quantity, description, categoryName };
+
     } else {
       cartInfo[id].quantity += Number(quantity);
     }
@@ -18,4 +22,6 @@ export const cartFuncs = {
   clickQuantity(event, product) {
     product.quantity = Number(event.target.value);
   },
+
+
 };
