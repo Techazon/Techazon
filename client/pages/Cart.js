@@ -1,38 +1,125 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/allProducts';
-import { connect } from 'react-redux';
-import { cartFuncs } from '../helperFuncs';
-import { Link } from 'react-router-dom';
-import GuestCart from '../components/GuestCart'
-import UserCart from '../components/UserCart'
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart, createCart } from "../store/cart";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      cart: JSON.parse(localStorage.getItem("cart")),
+      loggedIn: this.props.auth.id ? true : false,
+    };
+    this.changeQuantity = this.changeQuantity.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
   }
 
-//   componentDidMount() {
+  componentDidMount() {
+    this.props.auth.id && this.props.fetchCart(this.props.auth.id.toString());
+    console.log("fetching cart");
+  }
 
-// }
+  /*
+
+  if login in, check if active cart exists
+
+  if yes, axe LS and replace with active cart
+
+  if no, create empty cart
+
+  */
+
+  changeQuantity(evt, product) {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    let currProd = cart.find((item) => item.id === product.id);
+
+    if (evt.target.value === "decrease") {
+      if (currProd.quantity > 1) currProd.quantity -= 1;
+      // else this.removeFromCart(product)
+      //revisit for remove
+    } else if (evt.target.value === "increase") currProd.quantity += 1;
+    this.setState({ cart: cart });
+  }
+
+  removeFromCart(product) {
+    // We can probably just use state since we already got the cart
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log(cart);
+    let newCart = cart.filter((item) => item.id !== product.id);
+    this.setState({ cart: newCart });
+  }
 
   render() {
-    const isLoggedIn = false // false by default to trigger GuestCart
+    localStorage.setItem("cart", JSON.stringify(this.state.cart));
+    
+    let activeCart = this.state.loggedIn
+      ? this.props.cart.products && this.props.cart.products
+      : JSON.parse(localStorage.getItem("cart"));
+
+    let subTotal = 0;
+    console.log(this.props)
     return (
-        <div>
-            {isLoggedIn ? <UserCart/> : <GuestCart/>}
+      <div>
+        {activeCart &&
+          activeCart.map((product) => {
+            const totalCost = product.price * product.quantity;
+            subTotal += totalCost;
+            return (
+              <div key={product.id} className="individualCartProducts">
+                <h3>{product.productName}</h3>
+                <img src={product.imageUrl} width="150px" height="150px" />
+                <p>Price: ${product.price / 100}</p>
+                <div className="productQuantity">
+                  <button
+                    value="increase"
+                    onClick={(event) => this.changeQuantity(event, product)}
+                  >
+                    +
+                  </button>
+                  <p>Quantity: {product.quantity}</p>
+                  <button
+                    value="decrease"
+                    onClick={(event) => this.changeQuantity(event, product)}
+                  >
+                    -
+                  </button>
+                </div>
+                <button
+                  onClick={() => {
+                    this.removeFromCart(product);
+                    console.log(this.state.cart);
+                    console.log("currentProd --> ", product);
+                    console.log("test");
+                  }}
+                >
+                  Remove from Cart
+                </button>
+                <p>Total Cost: ${totalCost / 100}</p>
+              </div>
+            );
+          })}
+        <div id="cartTotalContainer">
+          <h3>Subtotal: ${subTotal / 100}</h3>
+          {/* Have to put <Link to='/checkout'></Link around button */}
+          {subTotal !== 0 && (
+            <Link to="/checkout">
+              <button id="checkoutButton">Proceed to Checkout</button>
+            </Link>
+          )}
         </div>
+      </div>
     );
   }
 }
 
-// const mapState = ({ allProductsReducer }) => {
-//   return allProductsReducer;
-// };
+const mapState = ({ auth, cart }) => {
+  return { auth, cart };
+};
 
-// const mapDispatch = (dispatch) => ({
-//   fetchProducts: () => dispatch(fetchProducts()),
-// });
+const mapDispatch = (dispatch) => ({
+  createCart: () => dispatch(createCart()),
+  fetchCart: (id) => dispatch(fetchCart(id)),
+});
 
-export default Cart;//connect(mapState, mapDispatch)(Cart);
+export default connect(mapState, mapDispatch)(Cart);
