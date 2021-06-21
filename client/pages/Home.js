@@ -1,26 +1,24 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { connect, useDispatch } from "react-redux";
+import { fetchCart } from "../store/cart";
 
 /**
  * COMPONENT
  */
 export const Home = (props) => {
-
-  const { username } = props;
+  
   return (
     <div>
-      <h3>Welcome {username ? username : 'Guest'},</h3>
+      <h3>Welcome {props.auth.firstName ? props.auth.firstName : "Guest"},</h3>
     </div>
-  )
+  );
 };
 
 /**
  * CONTAINER
  */
 const mapState = (state) => {
-  return {
-    username: state.auth.firstName,
-  };
+  return state;
 };
 
 export default connect(mapState)(Home);

@@ -15,7 +15,7 @@ export default class Checkout extends React.Component {
     const cartArray = this.state.cart;
     const total = cartArray.reduce((acc, cartItem) => {
       return (acc += cartItem.price * cartItem.quantity);
-    }, 0);
+    }, 0); 
     const mappedCart = cartArray.map((cartItem) => (
       <div key={cartItem.id}>
         <img src={cartItem.imageUrl} width="150px" height="150px" />
