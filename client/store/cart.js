@@ -1,11 +1,10 @@
 import axios from "axios";
-const TOKEN = localStorage.getItem("token");
-
+const TOKEN = "token";
 
 const SET_CART = "SET_CART";
-const CREATE_CART = "CREATE_CART"
-const ADD_TO_CART = "ADD_TO_CART"
-const UPDATE_CART_PRODUCT = "UPDATE_CART_PRODUCT"
+const CREATE_CART = "CREATE_CART";
+const ADD_TO_CART = "ADD_TO_CART";
+const UPDATE_CART_PRODUCT = "UPDATE_CART_PRODUCT";
 
 // Actions
 export const setCart = (cart) => {
@@ -39,46 +38,52 @@ export const _updateCartItem = (product) => {
 //Thunks
 export const fetchCart = (id) => {
   return async (dispatch) => {
-    console.log('fetching cart')
+    const token = localStorage.getItem(TOKEN);
+    console.log("fetching cart");
     const { data } = await axios.get(`/api/users/${id}/activeCart`, {
       headers: {
-        authorization: TOKEN,
+        authorization: token,
       },
     });
-    data.products.map(product => product.quantity = product.cart_product.quantity)
+    console.log(data[0]);
+    data[0].products &&
+      data[0].products.map(
+        (product) => (product.quantity = product.cart_product.quantity)
+      );
+
     dispatch(setCart(data));
   };
 };
 
 export const createCart = () => {
   return async (dispatch) => {
-    console.log('in thunk for create cart')
-    console.log(TOKEN)
-    const { data } = await axios.post("/api/carts",{
+    const token = localStorage.getItem(TOKEN);
+    console.log("in thunk for create cart");
+    console.log(token);
+    const { data } = await axios.post("/api/carts", {
       headers: {
-        authorization: TOKEN,
+        authorization: token,
       },
     });
-    
+
     dispatch(_createCart(data));
   };
 };
 
 export const addToCart = (cart, product) => {
   return async (dispatch) => {
-    const { data } = await axios.post(`/api/carts/${cart.id}`, product)
+    const { data } = await axios.post(`/api/carts/${cart.id}`, product);
     dispatch(_addToCart(data));
   };
 };
 
 // export const updateCartItem = (cart, product) => {
 //   return async (dispatch) => {
-//     const 
+//     const
 
 //     dispatch(setCart(data));
 //   };
 // };
-
 
 // Reducer
 export default function cartReducer(state = {}, action) {

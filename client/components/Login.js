@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { authenticateLogin } from "../store";
+import { useHistory } from "react-router-dom";
 
 /**
  * COMPONENT
@@ -47,25 +48,21 @@ const mapLogin = (state) => {
   };
 };
 
-const mapRegister = (state) => {
-  return {
-    name: "register",
-    displayName: "Register",
-    error: state.auth.error,
-  };
-};
 
 const mapDispatch = (dispatch) => {
   return {
     handleSubmit(evt) {
+      // const history = useHistory();
       evt.preventDefault();
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
+
       dispatch(authenticateLogin(email, password, formName));
+      // history.push("/");
     },
   };
 };
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
-export const Register = connect(mapRegister, mapDispatch)(AuthForm);
+

@@ -19,16 +19,17 @@ router.get("/", requireToken, isAdmin, async (req, res, next) => {
 
 //GET users/:userid/activeCart
 
-router.get("/:userid/activeCart", requireToken, hasPermission, async (req, res, next) => {
+router.get("/:userid/activeCart", requireToken, async (req, res, next) => {
   try {
     const carts = await Cart.findOrCreate({
       where: {
         userId: req.params.userid,
         status: "ACTIVE",
       },
-      include: Product,
+      include: [{ model: Product, required: false }],
+      // required: false,
     });
-
+    console.log(carts);
     res.json(carts);
   } catch (err) {
     next(err);
