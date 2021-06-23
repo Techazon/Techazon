@@ -16,8 +16,9 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-    this.props.auth.id && this.props.fetchCart(this.props.auth.id.toString());
-    console.log("fetching cart");
+
+
+    this.state.loggedIn && this.props.fetchCart() 
   }
 
   /*
@@ -119,7 +120,7 @@ const mapState = ({ auth, cart }) => {
 
 const mapDispatch = (dispatch) => ({
   createCart: () => dispatch(createCart()),
-  fetchCart: (id) => dispatch(fetchCart(id)),
+  fetchCart: () => dispatch(fetchCart()),
 });
 
 export default connect(mapState, mapDispatch)(Cart);
