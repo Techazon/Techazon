@@ -40,8 +40,10 @@ class AllProducts extends React.Component {
                   onClick={() => {
                     cartFuncs.clickAddToCart(product)
                     // console.log('WHERE IS CART ID -->', this.props)
+                    console.log('jskhevlkajehf -> ', this.props.cart)
                     product.cartId = this.props.cart.id
                     console.log('PROPS CART ID -->', this.props.cart.id)
+                    console.log(isLoggedIn)
                     isLoggedIn && this.props.addToCart(product)
                   }}
                 >

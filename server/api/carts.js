@@ -6,11 +6,12 @@ const CartProduct = require("../db/models/cartProduct");
 const { requireToken, checkActiveCart, isAdmin } = require("./gatekeepers");
 
 //Create new cart
-router.post("/", requireToken, checkActiveCart, async (req, res, next) => {
+router.post("/", requireToken, async (req, res, next) => {
   try {
+    console.log(req.body)
     const cart = await Cart.create(req.body);
     cart.setUser(req.user);
-    res.status(201).send(cart.data);
+    res.status(201).send(cart);
   } catch (err) {
     next(err);
   }
@@ -36,7 +37,7 @@ router.post(
       const { quantity, id, cartId } = req.body
       // console.log('req.body -->', req.body)
       const cartProduct = await CartProduct.create({cartId, quantity, productId: id});
-      res.send(cartProduct);
+      res.sendStatus(201);
     } catch (err) {
       next(err);
     }
