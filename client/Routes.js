@@ -18,16 +18,20 @@ import { createCart, fetchCart } from "./store/cart";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
-
-    if (this.props.auth){
+    
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
       this.props.fetchCart()
     }
+    
   }
 
   render() {
     if (!localStorage.getItem('cart')) {
       localStorage.setItem('cart', JSON.stringify([]));
     }
+
     return (
       <div>
         <Switch>
@@ -40,7 +44,7 @@ class Routes extends Component {
           <Route path="/checkout" component={Checkout} />
           <Route path="/guestordercomplete" component={GuestOrderComplete} />
           <Route path='/cart' component={Cart} />
-          <Redirect to="/"/>
+          <Redirect to="/" />
         </Switch>
       </div>
     );

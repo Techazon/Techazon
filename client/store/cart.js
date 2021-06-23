@@ -46,7 +46,7 @@ export const fetchCart = () => {
           authorization: token,
         },
       });
-      dispatch(setCart(data));
+      dispatch(setCart(data.data));
     } catch (error) {
         if (error.response.status === 404) {
           dispatch(createCart())
@@ -61,7 +61,7 @@ export const createCart = () => {
     console.log("in thunk for create cart");
     console.log(token);
     try {
-      const { data } = await axios.post("/api/carts", null, {
+      const { data } = await axios.post("/api/carts", {}, {
         headers: {
           authorization: token,
         },
@@ -77,12 +77,18 @@ export const createCart = () => {
 export const addToCart = (product) => {
   return async (dispatch) => {
     const token = localStorage.getItem(TOKEN);
-    const { data } = await axios.post(`/api/carts/addProduct`, product, {
-      headers: {
-        authorization: token,
-      }
-    });
-    dispatch(_addToCart(data));
+    console.log('sup')
+    try {
+      const { data } = await axios.post(`/api/carts/addProduct`, product, {
+        headers: {
+          authorization: token,
+        }
+      });
+      dispatch(_addToCart(product));
+      
+    } catch (error) {
+      console.log(error)
+    }
   };
 };
 
@@ -102,7 +108,10 @@ export default function cartReducer(state = {}, action) {
     case CREATE_CART:
       return action.cart;
     case ADD_TO_CART:
-      return action.cart;
+      // console.log(state)
+      // console.log(action.product)
+      if (!state.products) state.products = []
+      return {...state, products: [...state.products, action.product]}
     case UPDATE_CART_PRODUCT:
       return action.cart;
     default:

@@ -21,4 +21,10 @@ const mapState = (state) => {
   return state;
 };
 
-export default connect(mapState)(Home);
+const mapDispatch = (dispatch) => {
+  return {
+    fetchCart: () => dispatch(fetchCart())
+  }
+}
+
+export default connect(mapState,mapDispatch)(Home);
