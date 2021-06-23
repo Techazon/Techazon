@@ -9,7 +9,7 @@ export const Home = (props) => {
   
   return (
     <div>
-      <h3>Welcome {props.auth.firstName ? props.auth.firstName : "Guest"},</h3>
+      <h3>Welcome {props.auth.firstName ? props.auth.firstName : "Guest"}</h3>
     </div>
   );
 };
