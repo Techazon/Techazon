@@ -16,8 +16,6 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-
-
     this.state.loggedIn && this.props.fetchCart() 
   }
 

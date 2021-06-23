@@ -29,7 +29,7 @@ export const me = () => async (dispatch) => {
 };
 
 export const authenticateLogin =
-  (email, password, method) => async (dispatch) => {
+  (email, password, method, history) => async (dispatch) => {
     try {
       const res = await axios.post(`/auth/${method}`, {
         email,
@@ -37,13 +37,14 @@ export const authenticateLogin =
       });
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
+      history.push('/')
     } catch (authError) {
       return dispatch(setAuth({ error: authError }));
     }
   };
 
 export const authenticateRegister =
-  (firstName, lastName, email, password, method) => async (dispatch) => {
+  (firstName, lastName, email, password, method, history) => async (dispatch) => {
     try {
       const res = await axios.post(`/auth/${method}`, {
         firstName,
@@ -53,6 +54,7 @@ export const authenticateRegister =
       });
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
+      history.push('/')
     } catch (authError) {
       return dispatch(setAuth({ error: authError }));
     }

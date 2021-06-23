@@ -60,7 +60,7 @@ const mapRegister = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     handleSubmit(evt) {
       evt.preventDefault();
@@ -70,7 +70,7 @@ const mapDispatch = (dispatch) => {
       const lastName = evt.target.lastName.value;
       const password = evt.target.password.value;
       dispatch(
-        authenticateRegister(firstName, lastName, email, password, formName)
+        authenticateRegister(firstName, lastName, email, password, formName, history)
       );
     },
   };

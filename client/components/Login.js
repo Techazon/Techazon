@@ -49,16 +49,16 @@ const mapLogin = (state) => {
 };
 
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     handleSubmit(evt) {
-      // const history = useHistory();
+      //const history = useHistory();
       evt.preventDefault();
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
 
-      dispatch(authenticateLogin(email, password, formName));
+      dispatch(authenticateLogin(email, password, formName, history));
       // history.push("/");
     },
   };
