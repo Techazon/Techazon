@@ -15,9 +15,9 @@ class Cart extends React.Component {
     this.removeFromCart = this.removeFromCart.bind(this);
   }
 
-  componentDidMount() {
-    this.state.loggedIn && this.props.fetchCart() 
-  }
+  // componentDidMount() {
+  //   this.state.loggedIn && this.props.fetchCart() 
+  // }
 
   /*
 

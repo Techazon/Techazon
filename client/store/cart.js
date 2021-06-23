@@ -66,7 +66,7 @@ export const createCart = () => {
           authorization: token,
         },
       });
-
+      console.log(data)
       dispatch(_createCart(data));
     } catch (error) {
       console.log("create cart error ---> ", error);
@@ -74,9 +74,14 @@ export const createCart = () => {
   };
 };
 
-export const addToCart = (cart, product) => {
+export const addToCart = (product) => {
   return async (dispatch) => {
-    const { data } = await axios.post(`/api/carts/${cart.id}`, product);
+    const token = localStorage.getItem(TOKEN);
+    const { data } = await axios.post(`/api/carts/addProduct`, product, {
+      headers: {
+        authorization: token,
+      }
+    });
     dispatch(_addToCart(data));
   };
 };
