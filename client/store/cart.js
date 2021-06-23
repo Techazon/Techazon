@@ -36,22 +36,22 @@ export const _updateCartItem = (product) => {
 };
 
 //Thunks
-export const fetchCart = (id) => {
+export const fetchCart = () => {
   return async (dispatch) => {
     const token = localStorage.getItem(TOKEN);
     console.log("fetching cart");
-    const { data } = await axios.get(`/api/users/${id}/activeCart`, {
-      headers: {
-        authorization: token,
-      },
-    });
-    console.log(data[0]);
-    data[0].products &&
-      data[0].products.map(
-        (product) => (product.quantity = product.cart_product.quantity)
-      );
-
-    dispatch(setCart(data));
+    try {
+      const data = await axios.get(`/api/carts/activeCart`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(setCart(data));
+    } catch (error) {
+        if (error.response.status === 404) {
+          dispatch(createCart())
+        }
+    }
   };
 };
 
@@ -60,13 +60,17 @@ export const createCart = () => {
     const token = localStorage.getItem(TOKEN);
     console.log("in thunk for create cart");
     console.log(token);
-    const { data } = await axios.post("/api/carts", {
-      headers: {
-        authorization: token,
-      },
-    });
+    try {
+      const { data } = await axios.post("/api/carts", null, {
+        headers: {
+          authorization: token,
+        },
+      });
 
-    dispatch(_createCart(data));
+      dispatch(_createCart(data));
+    } catch (error) {
+      console.log("create cart error ---> ", error);
+    }
   };
 };
 

@@ -65,4 +65,24 @@ router.put(
   }
 );
 
+//GET carts/activeCart
+
+router.get("/activeCart", requireToken, async (req, res, next) => {
+  try {
+    const carts = await Cart.findOne({
+      where: {
+        userId: req.user.id,
+        status: "ACTIVE",
+      },
+      include: [{ model: Product, required: false }],
+    });
+    console.log(carts);
+    !carts ? res.sendStatus(404) : res.json(carts);
+  } catch (err) {
+    console.log('error caught in route')
+    next(err);
+  }
+});
+
+
 module.exports = router;
