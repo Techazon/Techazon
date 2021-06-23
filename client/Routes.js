@@ -18,6 +18,10 @@ import { createCart, fetchCart } from "./store/cart";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+
+    if (this.props.auth){
+      this.props.fetchCart()
+    }
   }
 
   render() {
@@ -56,6 +60,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
+    fetchCart: () => dispatch(fetchCart()),
     loadInitialData() {
       dispatch(me());
     },

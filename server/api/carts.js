@@ -31,10 +31,11 @@ router.get("/", requireToken, isAdmin, async (req, res, next) => {
 
 //Create cart products
 router.post(
-  "/:id",
-  /* Need to implement permissions function */ async (req, res, next) => {
+  "/addProduct", requireToken, async (req, res, next) => {
     try {
-      const cartProduct = await CartProduct.create(req.body);
+      const { quantity, id, cartId } = req.body
+      // console.log('req.body -->', req.body)
+      const cartProduct = await CartProduct.create({cartId, quantity, productId: id});
       res.send(cartProduct);
     } catch (err) {
       next(err);

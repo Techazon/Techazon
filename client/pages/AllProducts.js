@@ -16,6 +16,7 @@ class AllProducts extends React.Component {
   }
 
   render() {
+    const isLoggedIn = localStorage.getItem("token")
     const products = this.props.products.products;
     return (
       <div>
@@ -37,7 +38,11 @@ class AllProducts extends React.Component {
                 <div>Category Name: {product.category.categoryName}</div>
                 <button
                   onClick={() => {
-                    cartFuncs.clickAddToCart(product);
+                    cartFuncs.clickAddToCart(product)
+                    // console.log('WHERE IS CART ID -->', this.props)
+                    product.cartId = this.props.cart.id
+                    console.log('PROPS CART ID -->', this.props.cart.id)
+                    isLoggedIn && this.props.addToCart(product)
                   }}
                 >
                   Add to Cart
@@ -71,13 +76,13 @@ class AllProducts extends React.Component {
   }
 }
 
-const mapState = ({ allProductsReducer, cartReducer }) => {
-  return { products: allProductsReducer, cart: cartReducer };
+const mapState = ({ allProductsReducer, cart }) => {
+  return { products: allProductsReducer, cart };
 };
 
 const mapDispatch = (dispatch) => ({
   fetchProducts: () => dispatch(fetchProducts()),
-  // addToCart: (cart, product) => dispatch(addToCart(cart, product)),
+  addToCart: (product) => dispatch(addToCart(product)),
 });
 
 export default connect(mapState, mapDispatch)(AllProducts);
