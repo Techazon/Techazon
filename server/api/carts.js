@@ -63,6 +63,7 @@ router.delete("/deleteProduct", requireToken, async (req, res, next) => {
 //Update cart products
 router.put("/", requireToken, async (req, res, next) => {
     try {
+      console.log(req.body)
       const cartData = await CartProduct.update(req.body,
         {
           where: {
@@ -71,7 +72,9 @@ router.put("/", requireToken, async (req, res, next) => {
           },
         }
       );
-      res.status(201)
+
+      console.log(cartData)
+      res.sendStatus(201)
 
     } catch (err) {
       next(err);
