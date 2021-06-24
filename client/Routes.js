@@ -18,7 +18,6 @@ import { createCart, fetchCart } from "./store/cart";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
-    
   }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
@@ -32,7 +31,6 @@ class Routes extends Component {
     if (!localStorage.getItem('cart')) {
       localStorage.setItem('cart', JSON.stringify([]));
     }
-
     return (
       <div>
         <Switch>

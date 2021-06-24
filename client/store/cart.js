@@ -57,6 +57,7 @@ export const fetchCart = () => {
     } catch (error) {
       if (error.response.status === 404) {
         dispatch(createCart());
+        dispatch(fetchCart());
       }
     }
   };
@@ -76,6 +77,7 @@ export const createCart = () => {
         }
       );
       dispatch(_createCart(data));
+      
     } catch (error) {
       console.log("create cart error ---> ", error);
     }
