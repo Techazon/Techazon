@@ -30,10 +30,11 @@ class AllProducts extends React.Component {
                     <img src={product.imageUrl} />
                   </Link>
                   <div className="product-info">
-                    <div><strong>{product.productName}</strong></div>
+                    <div>
+                      <strong>{product.productName}</strong>
+                    </div>
                     <div>${product.price / 100}</div>
                     {!product.stock && <div> SOLD OUT </div>}
-                    <div>{product.description}</div>
                     {/* <div>Category: {product.category.categoryName}</div> */}
                   </div>
                   <div id="button-container">
