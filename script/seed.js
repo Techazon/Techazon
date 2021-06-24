@@ -19,19 +19,19 @@ async function seed() {
   await createAddresses();
 
   const computers = await Category.create({
-    categoryName: "computers",
+    categoryName: "Computers",
   });
   const laptops = await Category.create({
-    categoryName: "laptops",
+    categoryName: "Laptops",
   });
   const videoGameConsoles = await Category.create({
-    categoryName: "video game consoles",
+    categoryName: "Video Game Consoles",
   });
   const cellPhones = await Category.create({
-    categoryName: "cell phones",
+    categoryName: "Cell Phones",
   });
   const keyboards = await Category.create({
-    categoryName: "keyboards",
+    categoryName: "Keyboards",
   });
 
   //Products
