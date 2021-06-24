@@ -85,7 +85,6 @@ export const createCart = () => {
 export const addToCart = (product) => {
   return async (dispatch) => {
     const token = localStorage.getItem(TOKEN);
-
     if (!product.quantity) product.quantity = 1
     try {
       const { data } = await axios.post(`/api/carts/addProduct`, product, {
@@ -95,7 +94,8 @@ export const addToCart = (product) => {
       });
       dispatch(_addToCart(product));
     } catch (error) {
-      console.log(error);
+      
+      console.log(error.response.status);
     }
   };
 };

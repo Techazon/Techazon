@@ -75,7 +75,6 @@ router.put("/", requireToken, async (req, res, next) => {
 
       console.log(cartData)
       res.sendStatus(201)
-
     } catch (err) {
       next(err);
     }
