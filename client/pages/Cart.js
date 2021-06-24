@@ -22,8 +22,10 @@ class Cart extends React.Component {
 
   changeQuantity(evt, product) {
     let cart = JSON.parse(localStorage.getItem("cart"));
+    
     let currProd = cart.find((item) => item.id === product.id);
-    if (!currProd.quantity) currProd.quantity =1;
+    currProd.quantity = +currProd.quantity
+    if (!currProd.quantity) currProd.quantity = 1;
     if (product.cart_product) {
       currProd.quantity = product.cart_product.quantity
     }
