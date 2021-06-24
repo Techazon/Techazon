@@ -70,17 +70,19 @@ class Cart extends React.Component {
     let subTotal = 0;
     return (
       <div>
+      <div id='cart-container'>
         {activeCart &&
           activeCart.map((product) => {
             const quantity = product.cart_product ? product.cart_product.quantity : product.quantity;
             const totalCost = product.price * quantity;
             subTotal += totalCost;
             return (
-              <div key={product.id} className="individualCartProducts">
+              <div key={product.id} className="individual-cart-product">
+                <img src={product.imageUrl}/>
+                <div className='cart-product-info'>
                 <h3>{product.productName}</h3>
-                <img src={product.imageUrl} width="150px" height="150px" />
                 <p>Price: ${product.price / 100}</p>
-                <div className="productQuantity">
+                <div className="product-quantity">
                   <button
                     value="increase"
                     onClick={(event) => {
@@ -108,9 +110,11 @@ class Cart extends React.Component {
                 </button>
                 <p>Total Cost: ${totalCost / 100}</p>
               </div>
+              </div>
             );
           })}
-        <div id="cartTotalContainer">
+              </div>
+        <div id="cart-total-container">
           <h3>Subtotal: ${subTotal / 100}</h3>
           {/* Have to put <Link to='/checkout'></Link around button */}
           {subTotal !== 0 && (
