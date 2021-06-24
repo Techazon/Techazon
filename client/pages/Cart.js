@@ -35,7 +35,7 @@ class Cart extends React.Component {
       const updatedProduct = {
         cartId: currProd.cartId, quantity: currProd.quantity, productId: currProd.id
       }
-      await this.props.updateCartItem(updatedProduct)
+      this.props.updateCartItem(updatedProduct)
     }
 
     this.setState({ cart: cart });
