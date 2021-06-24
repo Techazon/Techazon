@@ -84,7 +84,6 @@ export const createCart = () => {
 
 export const addToCart = (product) => {
   return async (dispatch) => {
-    
     if (!product.quantity) product.quantity = 1
     try {
       const token = localStorage.getItem(TOKEN);
@@ -95,7 +94,8 @@ export const addToCart = (product) => {
       });
       dispatch(_addToCart(product));
     } catch (error) {
-      console.log(error);
+      
+      console.log(error.response.status);
     }
   };
 };

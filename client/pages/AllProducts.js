@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/allProducts";
-import { addToCart, fetchCart } from "../store/cart";
+import { addToCart, fetchCart, updateCartItem } from "../store/cart";
 import { connect } from "react-redux";
 import { cartFuncs } from "../helperFuncs";
 import { Link } from "react-router-dom";
@@ -9,10 +9,25 @@ import { Link } from "react-router-dom";
 class AllProducts extends React.Component {
   constructor(props) {
     super(props);
+    this.addToCart = this.addToCart.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchProducts();
+  }
+
+  async addToCart(product) {
+    if (!product.quantity) product.quantity = 1
+    const foundProd = this.props.cart.products.find(prod => prod.id === product.id)
+    
+    if (foundProd){
+      
+      foundProd.quantity = +product.quantity + +foundProd.cart_product.quantity
+      await this.props.updateCartItem({productId: foundProd.id, cartId: this.props.cart.id, quantity: foundProd.quantity})
+      this.props.fetchCart()
+    }
+     else {this.props.addToCart(product)
+    this.props.fetchCart()}
   }
 
   render() {
@@ -42,7 +57,7 @@ class AllProducts extends React.Component {
                       onClick={() => {
                         cartFuncs.clickAddToCart(product);
                         product.cartId = this.props.cart.id;
-                        isLoggedIn && this.props.addToCart(product);
+                        isLoggedIn && this.addToCart(product);
                       }}
                     >
                       Add to Cart
@@ -86,6 +101,8 @@ const mapState = ({ allProductsReducer, cart }) => {
 const mapDispatch = (dispatch) => ({
   fetchProducts: () => dispatch(fetchProducts()),
   addToCart: (product) => dispatch(addToCart(product)),
+  updateCartItem: (product) => dispatch(updateCartItem(product)),
+  fetchCart: ()=>dispatch(fetchCart())
 });
 
 export default connect(mapState, mapDispatch)(AllProducts);
