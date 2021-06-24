@@ -20,7 +20,7 @@ class AllProducts extends React.Component {
     const products = this.props.products.products;
     return (
       <div>
-        <h2>Check out our retro gear!</h2>
+        <h2 id="retro">Check out our retro gear!</h2>
         <div id="product-container">
           {products &&
             products.map((product) => {
