@@ -5,7 +5,7 @@ export default class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cart: Object.values(JSON.parse(localStorage.getItem("cart"))),
+      cart: this.props.auth ? this.props.cart : Object.values(JSON.parse(localStorage.getItem("cart"))),
     };
   }
 
@@ -59,3 +59,7 @@ export default class Checkout extends React.Component {
     );
   }
 }
+
+const mapState = ({ auth, cart }) => {
+  return { auth, cart };
+};

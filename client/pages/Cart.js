@@ -19,11 +19,11 @@ class Cart extends React.Component {
   componentDidMount() {
     this.state.loggedIn && this.props.fetchCart()
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.cart !== this.props.cart) this.props.fetchCart()
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.cart.products !== this.props.cart.products) this.props.fetchCart()
+  // }
 
-  changeQuantity(evt, product) {
+  async changeQuantity(evt, product) {
     let cart = JSON.parse(localStorage.getItem("cart"));
     
     let currProd = cart.find((item) => item.id === product.id);
@@ -40,7 +40,8 @@ class Cart extends React.Component {
       const updatedProduct = {
         cartId: currProd.cartId, quantity: currProd.quantity, productId: currProd.id
       }
-      this.props.updateCartItem(updatedProduct)
+      await this.props.updateCartItem(updatedProduct)
+      this.props.fetchCart()
     }
 
     this.setState({ cart: cart });
