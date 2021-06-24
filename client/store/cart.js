@@ -37,7 +37,6 @@ export const _removeFromCart = (product) => {
 };
 
 export const _updateCartItem = (product) => {
-  console.log('yo')
   return {
     type: UPDATE_CART,
     product,
@@ -128,6 +127,7 @@ export const updateCartItem = (product) => {
           authorization: token
         }
       })
+      console.log('lskjdhfg')
       dispatch(_updateCartItem(product));
     } catch (error) {
       console.log(error)
@@ -146,7 +146,8 @@ export default function cartReducer(state = {}, action) {
       if (!state.products) state.products = []
       return {...state, products: [...state.products, action.product]}
     case UPDATE_CART:
-      return {...state, products: [...state.products, action.product]}
+      console.log('testfefr')
+      return {...state, products: state.products.map((product) => (product.id === action.product.id ? action.product : product))}
     case REMOVE_FROM_CART:
       return {
         ...state,

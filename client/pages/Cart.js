@@ -36,6 +36,7 @@ class Cart extends React.Component {
         cartId: currProd.cartId, quantity: currProd.quantity, productId: currProd.id
       }
       this.props.updateCartItem(updatedProduct)
+      this.props.fetchCart()
     }
 
     this.setState({ cart: cart });
