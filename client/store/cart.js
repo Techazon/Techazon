@@ -46,8 +46,8 @@ export const _updateCartItem = (product) => {
 //Thunks
 export const fetchCart = () => {
   return async (dispatch) => {
-    const token = localStorage.getItem(TOKEN);
     try {
+      const token = localStorage.getItem(TOKEN);
       const data = await axios.get(`/api/carts/activeCart`, {
         headers: {
           authorization: token,
@@ -64,8 +64,8 @@ export const fetchCart = () => {
 
 export const createCart = () => {
   return async (dispatch) => {
-    const token = localStorage.getItem(TOKEN);
     try {
+      const token = localStorage.getItem(TOKEN);
       const { data } = await axios.post(
         "/api/carts",
         {},
@@ -84,10 +84,10 @@ export const createCart = () => {
 
 export const addToCart = (product) => {
   return async (dispatch) => {
-    const token = localStorage.getItem(TOKEN);
-
+    
     if (!product.quantity) product.quantity = 1
     try {
+      const token = localStorage.getItem(TOKEN);
       const { data } = await axios.post(`/api/carts/addProduct`, product, {
         headers: {
           authorization: token,
@@ -102,8 +102,8 @@ export const addToCart = (product) => {
 
 export const removeFromCart = (product) => {
   return async (dispatch) => {
-    const token = localStorage.getItem(TOKEN);
     try {
+      const token = localStorage.getItem(TOKEN);
       await axios.delete(`/api/carts/deleteProduct`, {
         headers: {
           authorization: token,
@@ -119,9 +119,8 @@ export const removeFromCart = (product) => {
 
 export const updateCartItem = (product) => {
   return async (dispatch) => {
-    console.log('updating cart', product)
-    const token = localStorage.getItem(TOKEN)
     try {
+      const token = localStorage.getItem(TOKEN)
       const { data } = await axios.put('/api/carts/', product, {
         headers: {
           authorization: token
