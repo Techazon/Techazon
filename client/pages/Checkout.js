@@ -20,9 +20,8 @@ export default class Checkout extends React.Component {
       <div key={cartItem.id}>
         <img src={cartItem.imageUrl} width="150px" height="150px" />
         <div>Product Name: {cartItem.productName}</div>
-        <div>Category: {cartItem.categoryName}</div>
         <div>
-          Total Price: {(cartItem.price * cartItem.quantity) / 100}
+          Total Price: ${(cartItem.price * cartItem.quantity) / 100}
         </div>
         <div>Quantity: {cartItem.quantity}</div>
       </div>
