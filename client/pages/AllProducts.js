@@ -18,16 +18,19 @@ class AllProducts extends React.Component {
 
   async addToCart(product) {
     if (!product.quantity) product.quantity = 1
-    const foundProd = this.props.cart.products.find(prod => prod.id === product.id)
     
-    if (foundProd){
-      
+    const foundProd = this.props.cart.products.find(prod => prod.id === product.id)
+
+    if (foundProd) {
+
       foundProd.quantity = +product.quantity + +foundProd.cart_product.quantity
-      await this.props.updateCartItem({productId: foundProd.id, cartId: this.props.cart.id, quantity: foundProd.quantity})
+      await this.props.updateCartItem({ productId: foundProd.id, cartId: this.props.cart.id, quantity: foundProd.quantity })
       this.props.fetchCart()
     }
-     else {this.props.addToCart(product)
-    this.props.fetchCart()}
+    else {
+      this.props.addToCart(product)
+      this.props.fetchCart()
+    }
   }
 
   render() {
@@ -102,7 +105,7 @@ const mapDispatch = (dispatch) => ({
   fetchProducts: () => dispatch(fetchProducts()),
   addToCart: (product) => dispatch(addToCart(product)),
   updateCartItem: (product) => dispatch(updateCartItem(product)),
-  fetchCart: ()=>dispatch(fetchCart())
+  fetchCart: () => dispatch(fetchCart())
 });
 
 export default connect(mapState, mapDispatch)(AllProducts);
