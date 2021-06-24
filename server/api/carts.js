@@ -8,7 +8,6 @@ const { requireToken, checkActiveCart, isAdmin } = require("./gatekeepers");
 //Create new cart
 router.post("/", requireToken, async (req, res, next) => {
   try {
-    console.log(req.body)
     const cart = await Cart.create(req.body);
     cart.setUser(req.user);
     res.status(201).send(cart);
@@ -35,7 +34,6 @@ router.post(
   "/addProduct", requireToken, async (req, res, next) => {
     try {
       const { quantity, id, cartId } = req.body
-      // console.log('req.body -->', req.body)
       const cartProduct = await CartProduct.create({cartId, quantity, productId: id});
       res.sendStatus(201);
     } catch (err) {
@@ -45,22 +43,17 @@ router.post(
 );
 
 //Update cart products
-router.put(
-  "/:id/:productId",
-  /* Need to implement permissions function */ async (req, res, next) => {
+router.put("/", requireToken, async (req, res, next) => {
     try {
-      const cartId = req.params.id;
-      const productId = req.params.productId;
-      await CartProduct.update(
-        { quantity: req.body.quantity },
+      const cartData = await CartProduct.update(req.body,
         {
           where: {
-            cartId,
-            productId,
+            cartId: req.body.cartId,
+            productId: req.body.productId,
           },
         }
       );
-      res.status(201).send('success')
+      res.status(201)
     } catch (err) {
       next(err);
     }
@@ -78,7 +71,6 @@ router.get("/activeCart", requireToken, async (req, res, next) => {
       },
       include: [{ model: Product, required: false }],
     });
-    console.log(carts);
     !carts ? res.sendStatus(404) : res.json(carts);
   } catch (err) {
     console.log('error caught in route')

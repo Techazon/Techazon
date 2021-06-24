@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCart, createCart } from "../store/cart";
+import { fetchCart, createCart, updateCartItem } from "../store/cart";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -15,29 +15,24 @@ class Cart extends React.Component {
     this.removeFromCart = this.removeFromCart.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.state.loggedIn && this.props.fetchCart() 
-  // }
-
-  /*
-
-  if login in, check if active cart exists
-
-  if yes, axe LS and replace with active cart
-
-  if no, create empty cart
-
-  */
-
-  changeQuantity(evt, product) {
+  async changeQuantity(evt, product) {
     let cart = JSON.parse(localStorage.getItem("cart"));
     let currProd = cart.find((item) => item.id === product.id);
-
+    if (!currProd.quantity) currProd.quantity =1;
+    if (product.cart_product) {
+      currProd.quantity = product.cart_product.quantity
+    }
     if (evt.target.value === "decrease") {
       if (currProd.quantity > 1) currProd.quantity -= 1;
-      // else this.removeFromCart(product)
-      //revisit for remove
     } else if (evt.target.value === "increase") currProd.quantity += 1;
+    if (this.props.auth.id) {
+      currProd.cartId = this.props.cart.id
+      const updatedProduct = {
+        cartId: currProd.cartId, quantity: currProd.quantity, productId: currProd.id
+      }
+      await this.props.updateCartItem(updatedProduct)
+    }
+
     this.setState({ cart: cart });
   }
 
@@ -51,8 +46,8 @@ class Cart extends React.Component {
 
   render() {
     localStorage.setItem("cart", JSON.stringify(this.state.cart));
-    
-    let activeCart = this.state.loggedIn
+    const token = localStorage.getItem('token')
+    let activeCart = token
       ? this.props.cart.products && this.props.cart.products
       : JSON.parse(localStorage.getItem("cart"));
 
@@ -62,7 +57,8 @@ class Cart extends React.Component {
       <div>
         {activeCart &&
           activeCart.map((product) => {
-            const totalCost = product.price * product.quantity;
+            const quantity = product.cart_product ? product.cart_product.quantity : product.quantity;
+            const totalCost = product.price * quantity;
             subTotal += totalCost;
             return (
               <div key={product.id} className="individualCartProducts">
@@ -72,14 +68,18 @@ class Cart extends React.Component {
                 <div className="productQuantity">
                   <button
                     value="increase"
-                    onClick={(event) => this.changeQuantity(event, product)}
+                    onClick={(event) => {
+                      this.changeQuantity(event, product)
+                    }}
                   >
                     +
                   </button>
-                  <p>Quantity: {product.quantity}</p>
+                  <p>Quantity: {quantity}</p>
                   <button
                     value="decrease"
-                    onClick={(event) => this.changeQuantity(event, product)}
+                    onClick={(event) => {
+                      this.changeQuantity(event, product)
+                    }}
                   >
                     -
                   </button>
@@ -119,6 +119,7 @@ const mapState = ({ auth, cart }) => {
 const mapDispatch = (dispatch) => ({
   createCart: () => dispatch(createCart()),
   fetchCart: () => dispatch(fetchCart()),
+  updateCartItem: (product) => dispatch(updateCartItem(product))
 });
 
 export default connect(mapState, mapDispatch)(Cart);

@@ -23,7 +23,6 @@ class AllProducts extends React.Component {
         <h2>Check out our retro gear!</h2>
         {products &&
           products.map((product) => {
-            product.quantity = 1;
             return (
               <div key={product.id}>
                 <img src={product.imageUrl} width="150px" height="150px" />

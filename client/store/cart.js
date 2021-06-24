@@ -4,7 +4,7 @@ const TOKEN = "token";
 const SET_CART = "SET_CART";
 const CREATE_CART = "CREATE_CART";
 const ADD_TO_CART = "ADD_TO_CART";
-const UPDATE_CART_PRODUCT = "UPDATE_CART_PRODUCT";
+const UPDATE_CART = "UPDATE_CART";
 
 // Actions
 export const setCart = (cart) => {
@@ -29,8 +29,9 @@ export const _addToCart = (product) => {
 };
 
 export const _updateCartItem = (product) => {
+  console.log('yo')
   return {
-    type: ADD_TO_CART,
+    type: UPDATE_CART,
     product,
   };
 };
@@ -77,6 +78,8 @@ export const createCart = () => {
 export const addToCart = (product) => {
   return async (dispatch) => {
     const token = localStorage.getItem(TOKEN);
+    if (!product.quantity) product.quantity = 1
+    console.log(product)
     console.log('sup')
     try {
       const { data } = await axios.post(`/api/carts/addProduct`, product, {
@@ -92,13 +95,22 @@ export const addToCart = (product) => {
   };
 };
 
-// export const updateCartItem = (cart, product) => {
-//   return async (dispatch) => {
-//     const
-
-//     dispatch(setCart(data));
-//   };
-// };
+export const updateCartItem = (product) => {
+  return async (dispatch) => {
+    console.log('updating cart', product)
+    const token = localStorage.getItem(TOKEN)
+    try {
+      const { data } = await axios.put('/api/carts/', product, {
+        headers: {
+          authorization: token
+        }
+      })
+      dispatch(_updateCartItem(product));
+    } catch (error) {
+      console.log(error)
+    }
+  };
+};
 
 // Reducer
 export default function cartReducer(state = {}, action) {
@@ -108,12 +120,10 @@ export default function cartReducer(state = {}, action) {
     case CREATE_CART:
       return action.cart;
     case ADD_TO_CART:
-      // console.log(state)
-      // console.log(action.product)
       if (!state.products) state.products = []
       return {...state, products: [...state.products, action.product]}
-    case UPDATE_CART_PRODUCT:
-      return action.cart;
+    case UPDATE_CART:
+      return {...state, products: [...state.products, action.product]}
     default:
       return state;
   }
