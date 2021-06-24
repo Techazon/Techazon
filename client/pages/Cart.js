@@ -19,11 +19,16 @@ class Cart extends React.Component {
   componentDidMount() {
     this.state.loggedIn && this.props.fetchCart()
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.cart !== this.props.cart) this.props.fetchCart()
+  }
 
   changeQuantity(evt, product) {
     let cart = JSON.parse(localStorage.getItem("cart"));
+    
     let currProd = cart.find((item) => item.id === product.id);
-    if (!currProd.quantity) currProd.quantity =1;
+    currProd.quantity = +currProd.quantity
+    if (!currProd.quantity) currProd.quantity = 1;
     if (product.cart_product) {
       currProd.quantity = product.cart_product.quantity
     }
@@ -36,7 +41,6 @@ class Cart extends React.Component {
         cartId: currProd.cartId, quantity: currProd.quantity, productId: currProd.id
       }
       this.props.updateCartItem(updatedProduct)
-      this.props.fetchCart()
     }
 
     this.setState({ cart: cart });
