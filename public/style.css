@@ -1,5 +1,5 @@
 body {
-  font-family: Montserrat, sans-serif;
+  font-family: "Goldman", cursive;
   margin: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -29,37 +29,37 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #18A0FB;
+  color: #18a0fb;
   text-decoration: none;
-  height: 2rem;
+  /* height: 2rem; */
   font-size: 1rem;
-  
-  margin: 0
+  height: 50px;
+  padding: 5px;
+  margin: 0;
 }
 
-nav a{
-  font-size: 0.75rem;
-  color: #18A0FB;
+nav a {
+  font-size: 1rem;
+  color: #18a0fb;
   margin-left: 1rem;
 }
 
-
-#navLinks{
-  display:flex;
+#navLinks {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#navLinks a{
+#navLinks a {
   margin-top: 0.25rem;
 }
 
 #navButtons {
-  align-items:center;
+  align-items: center;
 }
 
-#registerButton{
-  background: #18A0FB;
+#registerButton {
+  background: #18a0fb;
   color: white;
   font-weight: bold;
   font-size: 15px;
@@ -67,58 +67,86 @@ nav a{
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.25rem;
-  padding-bottom: 0.25rem; 
-
+  padding-bottom: 0.25rem;
 }
 
-#loginButton, #logoutButton{
+#welcome {
+  font-size: x-large;
+  text-align: center;
+}
+
+#img-home {
+  height: 500px;
+}
+
+button {
+  background: white;
+  color: #18a0fb;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 6px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+button:active {
+  background-color: #18a0fb;
+  box-shadow: 0 2px #666;
+  transform: translateY(2px);
+}
+
+#loginButton,
+#logoutButton {
   font-weight: bold;
   background: white;
   font-size: 15px;
-  color: #18A0FB;
+  color: #18a0fb;
   border-width: 1px;
-  border-color:#18A0FB;
+  border-color: #18a0fb;
   border-style: solid;
   border-radius: 6px;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.25rem;
-  padding-bottom: 0.25rem; 
+  padding-bottom: 0.25rem;
 }
 
 /* All Product Page */
 
 #product-container {
-display: flex;
-align-items: center;
-justify-content: center;
-flex-wrap: wrap;
-/* border: blue solid 4px; */
-flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* border: blue solid 4px; */
+  flex-direction: row;
 }
 
 .product-cell {
-  border: #18A0FB solid 1px;
-  margin:0.5rem;
+  border: #18a0fb solid 1px;
+  margin: 0.5rem;
   display: flex;
   flex-direction: column;
   flex-basis: 1;
   width: 14rem;
 }
 
-.product-info{
+.product-info {
   margin-left: 0.5rem;
   text-align: center;
-  font-size: 15px
+  font-size: 15px;
 }
 
 .product-cell img {
   width: 13rem;
   height: 13rem;
-  margin-left:0.5rem;
+  margin-left: 0.5rem;
 }
 
-.product-cell button, .product-cell select {
+.product-cell button,
+.product-cell select {
   max-width: 5.57rem;
   font-size: 12px;
   text-align: center;
@@ -129,26 +157,26 @@ flex-direction: row;
 }
 
 #button-container {
-  margin-top:0.5rem;
+  margin-top: 0.5rem;
   display: flex;
   justify-content: space-around;
 }
 
 .quantity-container {
   margin-bottom: 0.5rem;
-  margin-top:0.5rem;
+  margin-top: 0.5rem;
   display: flex;
   justify-content: center;
   font-size: 13px;
 }
 
 .quantity-container select {
-  margin-left: 0.5rem
+  margin-left: 0.5rem;
 }
 
 /* SINGLE PRODUCT PAGE*/
 
-.single-product-container{
+.single-product-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,20 +186,27 @@ flex-direction: row;
   padding: 0.5rem;
 }
 
-.single-product-image-container img{
+.single-product-image-container img {
   max-width: 60rem;
-  max-height: 60rem;
+  max-height: 30rem;
 }
 
-.single-product-image-container, .single-product-info{
+.single-product-image-container,
+.single-product-info {
   /* border: red solid 1px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  margin: 5em;
 }
 
-.single-product-info button{
+#descr {
+  width: 500px;
+  font-size: medium;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.single-product-info button {
   max-width: 5.57rem;
 }

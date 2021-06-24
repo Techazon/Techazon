@@ -21,7 +21,7 @@ export class SingleProduct extends React.Component {
             </div>
             <div className="single-product-info">
               <h2>{product.productName}</h2>
-              <em>{product.description}</em>
+              <em id="descr">{product.description}</em>
               <p>${product.price / 100}</p>
               <button onClick={() => cartFuncs.clickAddToCart(product)}>
                 Add to Cart
