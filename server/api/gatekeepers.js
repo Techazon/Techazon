@@ -15,8 +15,7 @@ const requireToken = async (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  console.log('is admin')
-  console.log(req.user);
+
   if (req.user.role !== "Admin") {
     res.status(403).send("unauthorized");
   } else {
