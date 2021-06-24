@@ -17,8 +17,6 @@ class AllProducts extends React.Component {
   }
 
   async addToCart(product) {
-    console.log('gserjkh')
-    console.log(product)
     if (!product.quantity) product.quantity = 1
     const foundProd = this.props.cart.products.find(prod => prod.id === product.id)
     
