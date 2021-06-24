@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCart, createCart } from "../store/cart";
+import { fetchCart, createCart, removeFromCart } from "../store/cart";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -15,9 +15,9 @@ class Cart extends React.Component {
     this.removeFromCart = this.removeFromCart.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.state.loggedIn && this.props.fetchCart() 
-  // }
+  componentDidMount() {
+    this.state.loggedIn && this.props.fetchCart()
+  }
 
   /*
 
@@ -43,21 +43,23 @@ class Cart extends React.Component {
 
   removeFromCart(product) {
     // We can probably just use state since we already got the cart
+    if (this.props.auth.id) {
+      this.props.removeFromCart(product);
+      console.log(product);
+    }
     let cart = JSON.parse(localStorage.getItem("cart"));
-    console.log(cart);
     let newCart = cart.filter((item) => item.id !== product.id);
     this.setState({ cart: newCart });
   }
 
   render() {
     localStorage.setItem("cart", JSON.stringify(this.state.cart));
-    
+
     let activeCart = this.state.loggedIn
       ? this.props.cart.products && this.props.cart.products
       : JSON.parse(localStorage.getItem("cart"));
 
     let subTotal = 0;
-    console.log(this.props)
     return (
       <div>
         {activeCart &&
@@ -87,9 +89,6 @@ class Cart extends React.Component {
                 <button
                   onClick={() => {
                     this.removeFromCart(product);
-                    console.log(this.state.cart);
-                    console.log("currentProd --> ", product);
-                    console.log("test");
                   }}
                 >
                   Remove from Cart
@@ -119,6 +118,7 @@ const mapState = ({ auth, cart }) => {
 const mapDispatch = (dispatch) => ({
   createCart: () => dispatch(createCart()),
   fetchCart: () => dispatch(fetchCart()),
+  removeFromCart: (product) => dispatch(removeFromCart(product)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);
