@@ -5,6 +5,7 @@ const SET_CART = "SET_CART";
 const CREATE_CART = "CREATE_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const UPDATE_CART_PRODUCT = "UPDATE_CART_PRODUCT";
+const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
 // Actions
 export const setCart = (cart) => {
@@ -28,6 +29,13 @@ export const _addToCart = (product) => {
   };
 };
 
+export const _removeFromCart = (product) => {
+  return {
+    type: REMOVE_FROM_CART,
+    product,
+  };
+};
+
 export const _updateCartItem = (product) => {
   return {
     type: ADD_TO_CART,
@@ -39,7 +47,6 @@ export const _updateCartItem = (product) => {
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = localStorage.getItem(TOKEN);
-    console.log("fetching cart");
     try {
       const data = await axios.get(`/api/carts/activeCart`, {
         headers: {
@@ -48,9 +55,9 @@ export const fetchCart = () => {
       });
       dispatch(setCart(data.data));
     } catch (error) {
-        if (error.response.status === 404) {
-          dispatch(createCart())
-        }
+      if (error.response.status === 404) {
+        dispatch(createCart());
+      }
     }
   };
 };
@@ -58,15 +65,16 @@ export const fetchCart = () => {
 export const createCart = () => {
   return async (dispatch) => {
     const token = localStorage.getItem(TOKEN);
-    console.log("in thunk for create cart");
-    console.log(token);
     try {
-      const { data } = await axios.post("/api/carts", {}, {
-        headers: {
-          authorization: token,
-        },
-      });
-      console.log(data)
+      const { data } = await axios.post(
+        "/api/carts",
+        {},
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       dispatch(_createCart(data));
     } catch (error) {
       console.log("create cart error ---> ", error);
@@ -77,17 +85,32 @@ export const createCart = () => {
 export const addToCart = (product) => {
   return async (dispatch) => {
     const token = localStorage.getItem(TOKEN);
-    console.log('sup')
     try {
       const { data } = await axios.post(`/api/carts/addProduct`, product, {
         headers: {
           authorization: token,
-        }
+        },
       });
       dispatch(_addToCart(product));
-      
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
+  };
+};
+
+export const removeFromCart = (product) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem(TOKEN);
+    try {
+      await axios.delete(`/api/carts/deleteProduct`, {
+        headers: {
+          authorization: token,
+        },
+        data: { product: product.cart_product },
+      });
+      dispatch(_removeFromCart(product));
+    } catch (error) {
+      console.log(error);
     }
   };
 };
@@ -108,10 +131,15 @@ export default function cartReducer(state = {}, action) {
     case CREATE_CART:
       return action.cart;
     case ADD_TO_CART:
-      // console.log(state)
-      // console.log(action.product)
-      if (!state.products) state.products = []
-      return {...state, products: [...state.products, action.product]}
+      if (!state.products) state.products = [];
+      return { ...state, products: [...state.products, action.product] };
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        products: state.products.filter(
+          (product) => product.id !== action.product.id
+        ),
+      };
     case UPDATE_CART_PRODUCT:
       return action.cart;
     default:

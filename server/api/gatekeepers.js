@@ -6,9 +6,6 @@ const Cart = require("../db/models/cart");
 const requireToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    console.log('req.headers ---> ', req.headers)
-    console.log(token)
-    console.log('Require Token Middleware')
     const user = await User.findByToken(token);
     req.user = user;
     next();
@@ -18,8 +15,7 @@ const requireToken = async (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  console.log('is admin')
-  console.log(req.user);
+
   if (req.user.role !== "Admin") {
     res.status(403).send("unauthorized");
   } else {
