@@ -30,6 +30,7 @@ router.get("/", requireToken, isAdmin, async (req, res, next) => {
 });
 
 //Create cart products
+
 router.post("/addProduct", requireToken, async (req, res, next) => {
   try {
     const { quantity, id, cartId } = req.body;
@@ -60,22 +61,18 @@ router.delete("/deleteProduct", requireToken, async (req, res, next) => {
 });
 
 //Update cart products
-router.put(
-  "/:id/:productId",
-  /* Need to implement permissions function */ async (req, res, next) => {
+router.put("/", requireToken, async (req, res, next) => {
     try {
-      const cartId = req.params.id;
-      const productId = req.params.productId;
-      await CartProduct.update(
-        { quantity: req.body.quantity },
+      const cartData = await CartProduct.update(req.body,
         {
           where: {
-            cartId,
-            productId,
+            cartId: req.body.cartId,
+            productId: req.body.productId,
           },
         }
       );
-      res.status(201).send("success");
+      res.status(201)
+
     } catch (err) {
       next(err);
     }

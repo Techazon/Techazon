@@ -23,8 +23,9 @@ class Routes extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
       this.props.fetchCart()
+      console.log(this.props)
+      // this.props.cart.products.map(product => product.quantity = product.cart_product.quantity)
     }
-    
   }
 
   render() {
